@@ -43,6 +43,11 @@ def retrieving_the_amount_of_loan_taken_by_each_state(df):
 
     final_table = pd.DataFrame(df_starting,
                                columns=['States', 'State_abbreviations', 'Count_of_loans_within_a_particular_state'])
+
+    final_table = final_table.sort_values(by = 'Count_of_loans_within_a_particular_state', inplace=True, ascending=False)
+    # let's present only the states with more than 100 taken loans !!!
+    final_table.head(30)
+
     print('*')
 
     return final_table
