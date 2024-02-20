@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import squarify    # You need to install this library using pip: pip install squarify
+
 #import dataframe_image as dfi
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap #
@@ -24,7 +27,7 @@ def retrieving_the_amount_of_loan_taken_by_each_state(df):
         number_of_loans_in_specific_state = mini_df_per_state.shape[0]
         number_of_loans_in_specific_state_list.append(number_of_loans_in_specific_state)
         list_of_states.append(state_name)
-    print('*')
+
     list_of_full_names_states = ['Alaska', 'Alabama', 'Arkansas', 'Arizona', 'California', 'Colorado', 'Connecticut',
                                  'District of Columbia', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Iowa', 'Idaho',
                                  'Illinois', 'Indiana', 'Kansas', 'Kentucky', 'Louisiana',
@@ -46,12 +49,29 @@ def retrieving_the_amount_of_loan_taken_by_each_state(df):
 
 
 # **************************************************************************************************************
-# Function  name: retrieving_the_amount_of_loan_taken_by_each_state
+# Function  name: creating_a_treemap_count_for_each_state
 # input:
 # return value:
 # ***************************************************************************************************************
+def creating_a_treemap_count_for_each_state(result_table):
 
+    labels = list(result_table.loc[:,'States'])
+    sizes =list(result_table.loc[:,'Count_of_loans_within_a_particular_state'])
 
+    # Define a colormap with different shades of blue
+    cmap = plt.cm.get_cmap('Blues', len(labels))
+
+    # Generate a list of blue color strings
+    blue_colors = [cmap(i) for i in range(len(labels))]
+
+    # Plotting
+    plt.figure(figsize=(8, 6))
+    squarify.plot(sizes=sizes, label=labels, color=blue_colors, alpha=0.7,pad=True)
+    # Adding title and axis labels
+    plt.title("Example Treemap")
+    plt.axis('off')  # Turn off axis
+    # Display the plot
+    plt.show()
 
 
 if __name__ == '__main__':
@@ -81,4 +101,6 @@ if __name__ == '__main__':
 
 
 
-    retrieving_the_amount_of_loan_taken_by_each_state(df)
+    res = retrieving_the_amount_of_loan_taken_by_each_state(df)
+    creating_a_treemap_count_for_each_state(res)
+    print('*')
