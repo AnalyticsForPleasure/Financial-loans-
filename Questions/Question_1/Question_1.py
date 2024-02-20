@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import squarify    # You need to install this library using pip: pip install squarify
+import seaborn as sns
 
 #import dataframe_image as dfi
 import matplotlib.pyplot as plt
@@ -44,13 +45,14 @@ def retrieving_the_amount_of_loan_taken_by_each_state(df):
     final_table = pd.DataFrame(df_starting,
                                columns=['States', 'State_abbreviations', 'Count_of_loans_within_a_particular_state'])
 
-    final_table = final_table.sort_values(by = 'Count_of_loans_within_a_particular_state', inplace=True, ascending=False)
+    final_table = final_table.sort_values(by = 'Count_of_loans_within_a_particular_state', ascending=False)
     # let's present only the states with more than 100 taken loans !!!
-    final_table.head(30)
+
+    output_data =final_table.loc[(final_table['Count_of_loans_within_a_particular_state'] > 110)]
 
     print('*')
 
-    return final_table
+    return output_data
 
 
 # **************************************************************************************************************
@@ -59,23 +61,29 @@ def retrieving_the_amount_of_loan_taken_by_each_state(df):
 # return value:
 # ***************************************************************************************************************
 def creating_a_treemap_count_for_each_state(result_table):
+    plt.figure(figsize=(20, 8), facecolor='#f6f5f5')
 
-    labels = list(result_table.loc[:,'States'])
+    # Concatenate state labels with their respective sizes (number of loans)
+    labels_with_sizes = [f'{state}\n({size})' for state, size in zip(result_table['States'], result_table['Count_of_loans_within_a_particular_state'])] # TODO: Need to ask about this line
+
+    #labels = list(result_table.loc[:,'States'])
     sizes =list(result_table.loc[:,'Count_of_loans_within_a_particular_state'])
 
     # Define a colormap with different shades of blue
-    cmap = plt.cm.get_cmap('Blues', len(labels))
+    cmap = plt.cm.get_cmap('Blues', len(labels_with_sizes))
 
     # Generate a list of blue color strings
-    blue_colors = [cmap(i) for i in range(len(labels))]
+    blue_colors = [cmap(i) for i in reversed(range(len(labels_with_sizes)))]
 
     # Plotting
-    plt.figure(figsize=(8, 6))
-    squarify.plot(sizes=sizes, label=labels, color=blue_colors, alpha=0.7,pad=True)
+    #plt.figure(figsize=(8, 6))
+    squarify.plot(sizes=sizes, label=labels_with_sizes, color=blue_colors, alpha=0.7,pad=True,  text_kwargs={'fontsize':10,'fontname':'Franklin Gothic Medium Cond'})
     # Adding title and axis labels
     plt.title("Example Treemap")
     plt.axis('off')  # Turn off axis
     # Display the plot
+    plt.title('Count of Loans in Each State with More Than 100 Loans' ,fontsize=30, weight='bold',fontname='Franklin Gothic Medium Cond', color = 'dimgrey')
+    plt.savefig('treemap_count_for_each_state.jpg', dpi=250, bbox_inches='tight')
     plt.show()
 
 
