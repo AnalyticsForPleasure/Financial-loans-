@@ -11,6 +11,35 @@ from matplotlib.colors import LinearSegmentedColormap #
 
 ## Source: https://www.kaggle.com/datasets/nezukokamaado/auto-loan-dataset?select=financial_loan.csv
 
+# **************************************************************************************************************
+# Function  name: creating_a_cumulative_percentage_table
+# input: 
+# return value: 
+# ***************************************************************************************************************
+def creating_a_cumulative_percentage_table(df):
+    region_dict = {
+        'West': ['AK', 'CA', 'CO', 'HI', 'ID', 'MT', 'NV', 'OR', 'UT', 'WA', 'WY'],
+        'Southwest': ['AZ', 'NM', 'OK', 'TX'],
+        'Midwest': ['IA', 'IL', 'IN', 'KS', 'MI', 'MN', 'MO', 'ND', 'NE', 'OH', 'SD', 'WI'],
+        'Southeast': ['AL', 'AR', 'FL', 'GA', 'KY', 'LA', 'MS', 'NC', 'SC', 'TN', 'VA', 'WV'],
+        'Northeast': ['CT', 'DC', 'DE', 'MA', 'MD', 'ME', 'NH', 'NJ', 'NY', 'PA', 'RI', 'VT'],
+    }
+    # Create a new column to classify states into regions based on the dictionary
+    df['Region'] = df['address_state'].map(
+        {state: region for region, states in region_dict.items() for state in states}).fillna('Other')  # TODO: ask
+    his_region = df['Region'].value_counts().reset_index()
+    total_sum = his_region['count'].sum()
+    for index in range(len(his_region)):
+        his_region.loc[index, 'Percentage'] = his_region.loc[index, 'count'] / total_sum * 100
+    his_region['Cumulative Percentage'] = his_region['Percentage'].cumsum()
+    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].clip(upper=100)
+    
+    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    print('*')
+    
+    return his_region
+
 if __name__ == '__main__':
 
     pd.set_option('display.max_rows', 5000)
@@ -72,33 +101,5 @@ if __name__ == '__main__':
     df['full_name'] = df['address_state'].apply(lambda x: my_lookup[x])
     print('*')
 
-    precentage_for_each_region = []
-    region_dict = {
-        'West': ['AK', 'CA', 'CO', 'HI', 'ID', 'MT', 'NV', 'OR', 'UT', 'WA', 'WY'],
-        'Southwest': ['AZ', 'NM', 'OK', 'TX'],
-        'Midwest': ['IA', 'IL', 'IN', 'KS', 'MI', 'MN', 'MO', 'ND', 'NE', 'OH', 'SD', 'WI'],
-        'Southeast': ['AL', 'AR', 'FL', 'GA', 'KY', 'LA', 'MS', 'NC', 'SC', 'TN', 'VA', 'WV'],
-        'Northeast': ['CT', 'DC', 'DE', 'MA', 'MD', 'ME', 'NH', 'NJ', 'NY', 'PA', 'RI', 'VT'],
-    }
+    creating_a_cumulative_percentage_table(df)
 
-    # Create a new column to classify states into regions based on the dictionary
-    df['Region'] = df['address_state'].map({state: region for region, states in region_dict.items() for state in states}).fillna('Other') # TODO: ask
-
-    his_region =df['Region'].value_counts().reset_index()
-    total_sum = his_region['count'].sum()
-
-    #his_region = his_region.rename(index={1: 'Count of loans issued in each geographic region'})
-
-    for index in range(len(his_region)):
-        his_region.loc[index, 'Percentage'] = his_region.loc[index, 'count'] / total_sum * 100
-
-    #his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
-    his_region['Cumulative Percentage'] = his_region['Percentage'].cumsum()
-    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].clip(upper=100)
-
-
-    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
-    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
-    print('*')
-
-    # ***************************************************************************************************************
