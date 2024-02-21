@@ -87,9 +87,13 @@ if __name__ == '__main__':
     his_region =df['Region'].value_counts().reset_index()
     total_sum = his_region['count'].sum()
 
-    for index in range(len(his_region)):#np.arange(start=0, stop=4, step=1)
-        his_region[precentage_for_each_region] = his_region.loc[index,'count'] / total_sum
-    #precentage_for_each_region = ((player_points_season_2 / player_points_season_1) - 1)
+    #his_region = his_region.rename(index={1: 'Count of loans issued in each geographic region'})
+
+    for index in range(len(his_region)):
+        his_region.loc[index, 'Percentage'] = his_region.loc[index, 'count'] / total_sum * 100
+
+    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+
     print('*')
 
     # ***************************************************************************************************************
