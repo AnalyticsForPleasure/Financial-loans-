@@ -122,7 +122,6 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
 
     plt.show()
 
-
 if __name__ == '__main__':
 
     pd.set_option('display.max_rows', 5000)
