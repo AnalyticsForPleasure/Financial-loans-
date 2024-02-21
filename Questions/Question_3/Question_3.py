@@ -92,8 +92,13 @@ if __name__ == '__main__':
     for index in range(len(his_region)):
         his_region.loc[index, 'Percentage'] = his_region.loc[index, 'count'] / total_sum * 100
 
-    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    #his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    his_region['Cumulative Percentage'] = his_region['Percentage'].cumsum()
+    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].clip(upper=100)
 
+
+    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
     print('*')
 
     # ***************************************************************************************************************
