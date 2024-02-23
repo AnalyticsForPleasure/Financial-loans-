@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import squarify    # You need to install this library using pip: pip install squarify
 import seaborn as sns
+import matplotlib.ticker as mtick
 
 #import dataframe_image as dfi
 import matplotlib.pyplot as plt
@@ -52,17 +53,18 @@ def creating_a_cumulative_percentage_table(df):
     print('*')
     return his_region
 
-
+# **************************************************************************************************************
+# Function  name: creating_a_rectangle_layers_chart
+# input:
+# return value:
+# ***************************************************************************************************************
 def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     # Setting up figure and axes
     fig = plt.figure(figsize=(10, 16))  # create figure
     gs = fig.add_gridspec(3, 2)
     gs.update(wspace=0, hspace=0.8)
     ax0 = fig.add_subplot(gs[0, 0:2])
-    # ax1 = fig.add_subplot(gs[1, 0], ylim=(0, 6000))  # create axes
-    # ax2 = fig.add_subplot(gs[1, 1], ylim=(0, 6000))  # create axes
-    # ax3 = fig.add_subplot(gs[2, 0], ylim=(0, 600))  # create axes
-    # ax4 = fig.add_subplot(gs[2, 1], ylim=(0, 600))  # create axes
+
     # Color selection
     color_map = ["#bdbdbd" for _ in range(5)]
     color_map[0] = "#008294"
@@ -70,30 +72,22 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     background_color = "#fbfbfb"
     fig.patch.set_facecolor(background_color)  # figure background color
     ax0.set_facecolor(background_color)  # axes background color
-    # ax1.set_facecolor(background_color)  # axes background color
-    # ax2.set_facecolor(background_color)  # axes background color
-    # ax3.set_facecolor(background_color)  # axes background color
-    # ax4.set_facecolor(background_color)  # axes background color
-    # Continents
+
+    # region
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'Northeast'],
-             color="#008294", zorder=3, label="Northeast"
-             )
+             color="#008294", zorder=3, label="Northeast")
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'West'],
              left=cumulative_percentage_table['Northeast'],
-             color="#4b4b4c", zorder=3, label="West"
-             )
+             color="#4b4b4c", zorder=3, label="West")
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table[0,'Southeast'],
              left=cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-             color="#676767", zorder=3, label="Southeast"
-             )
+             color="#676767", zorder=3, label="Southeast" )
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table[0,'Midwest'],
              left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-             color="#808080", zorder=3, label="Midwest"
-             )
+             color="#808080", zorder=3, label="Midwest")
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table[0,'Southwest'],
              left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West']+ cumulative_percentage_table['Northeast'],
-             color="#989898", zorder=3, label="Southwest"
-             )
+             color="#989898", zorder=3, label="Southwest")
 
     for s in ["top", "right", "left"]:
         ax0.spines[s].set_visible(False)
