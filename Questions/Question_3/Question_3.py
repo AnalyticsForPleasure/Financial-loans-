@@ -113,6 +113,7 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
              fontsize=13,
              fontweight='light',
              fontfamily='serif')
+    plt.savefig('highest_loan_by_region.jpg', dpi=250, bbox_inches='tight')
     plt.show()
 
 
