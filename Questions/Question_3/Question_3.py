@@ -34,7 +34,9 @@ def creating_a_cumulative_percentage_table(df):
     his_region['Cumulative Percentage'] = his_region['Percentage'].cumsum()
     his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].clip(upper=100)
     
-    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
+    #his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{x:.4f}".format(x=r)) # {x:.1f}%
+    his_region['Percentage'] = his_region['Percentage'].apply(lambda r: "{:.4f}".format(float(r)))# {x:.1f}%
+
     his_region['Cumulative Percentage'] = his_region['Cumulative Percentage'].apply(lambda r: "{x:.1f}%".format(x=r))
 
     his_region= his_region.T
@@ -44,11 +46,11 @@ def creating_a_cumulative_percentage_table(df):
     # Move the first row to column headers
     his_region.columns = his_region.iloc[0]
 
-    # Remove the first row from the DataFrame
-    his_region = his_region[1:]
+    # Interested in retrieving only the percentage "row"
+    his_region = his_region[2:3]
 
     # Reset the index if needed
-    his_region.reset_index(drop=True, inplace=True)
+    #his_region.reset_index(drop=False, inplace=True)
     print('*')
     return his_region
 
@@ -64,17 +66,21 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     gs.update(wspace=0, hspace=0.8)
     ax0 = fig.add_subplot(gs[0, 0:2])
 
+
     # Color selection
     color_map = ["#bdbdbd" for _ in range(5)]
-    color_map[0] = "#008294"
+    color_map[0] = "#008294" # The color which was before
+    color_map[0] ="#FFA500"
+
     # Change background color
     background_color = "#fbfbfb"
     fig.patch.set_facecolor(background_color)  # figure background color
     ax0.set_facecolor(background_color)  # axes background color
+    print('*')
 
     # Plotting
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Northeast'],
-             color="#008294", zorder=3, label="Northeast")
+             color="#FFA500", zorder=3, label="Northeast")
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['West'],
              left=cumulative_percentage_table['Northeast'],
              color="#4b4b4c", zorder=3, label="West")
@@ -119,68 +125,11 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     plt.show()
 
 
-
-    # Setting up figure and axes
-    # fig = plt.figure(figsize=(10, 16))  # create figure
-    # gs = fig.add_gridspec(3, 2)
-    # gs.update(wspace=0, hspace=0.8)
-    # ax0 = fig.add_subplot(gs[0, 0:2])
-    #
-    # # Color selection
-    # color_map = ["#bdbdbd" for _ in range(5)]
-    # color_map[0] = "#008294"
-    # # Change background color
-    # background_color = "#fbfbfb"
-    # fig.patch.set_facecolor(background_color)  # figure background color
-    # ax0.set_facecolor(background_color)  # axes background color
-    #
-    # # region
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'Northeast'],
-    #          color="#008294", zorder=3, label="Northeast")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'West'],
-    #          left=cumulative_percentage_table['Northeast'],
-    #          color="#4b4b4c", zorder=3, label="West")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'Southeast'],
-    #          left=cumulative_percentage_table['West'] + cumulative_percentage_table.loc[0,'Northeast'],
-    #          color="#676767", zorder=3, label="Southeast" )
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'Midwest'],
-    #          left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table.loc[0,'West'] + cumulative_percentage_table.loc[0,'Northeast'],
-    #          color="#808080", zorder=3, label="Midwest")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table.loc[0,'Southwest'],
-    #          left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table.loc[0,'Southeast'] + cumulative_percentage_table.loc[0,'West']+ cumulative_percentage_table.loc[0,'Northeast'],
-    #          color="#989898", zorder=3, label="Southwest")
-    #
-    # for s in ["top", "right", "left"]:
-    #     ax0.spines[s].set_visible(False)
-    # ax0.xaxis.set_major_formatter(mtick.PercentFormatter())
-    # ax0.legend(loc='lower center', ncol=5, bbox_to_anchor=(0.48, -0.3))
-    # ax0.text(0, 0.8,
-    #          'Loans taken by region',
-    #          fontsize=30,
-    #          fontweight='bold',
-    #          fontfamily='serif')
-    # ax0.text(0, 0.7,
-    #          'with 5 regions',
-    #          fontsize=18,
-    #          fontweight='light',
-    #          fontfamily='serif')
-    # ax0.text(0, 0.53,
-    #          'From the most to the least Kagglers in the world are Asia, America, Europe',
-    #          fontsize=13,
-    #          fontweight='light',
-    #          fontfamily='serif')
-    # ax0.text(0, 0.45,
-    #          'Others, Africa and Australia',
-    #          fontsize=13,
-    #          fontweight='light',
-    #          fontfamily='serif')
-    #
-    # plt.show()
-
 if __name__ == '__main__':
 
     pd.set_option('display.max_rows', 5000)
     df = pd.read_csv('/home/shay_diy/PycharmProjects/Financial_loans/Data/financial_loan.csv')
+
     print('*')
 
     my_lookup = {'AK': 'Alaska',
