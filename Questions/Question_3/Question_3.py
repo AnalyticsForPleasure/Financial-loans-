@@ -47,10 +47,8 @@ def creating_a_cumulative_percentage_table(df):
     his_region.columns = his_region.iloc[0]
 
     # Interested in retrieving only the percentage "row"
-    his_region = his_region[2:3]
+    his_region = his_region[2:3].astype(float) # In addition I add the astype(float) - Super important here!
 
-    # Reset the index if needed
-    #his_region.reset_index(drop=False, inplace=True)
     print('*')
     return his_region
 
@@ -69,7 +67,6 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
 
     # Color selection
     color_map = ["#bdbdbd" for _ in range(5)]
-    color_map[0] = "#008294" # The color which was before
     color_map[0] ="#FFA500"
 
     # Change background color
@@ -80,21 +77,21 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
 
     # Plotting
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Northeast'],
-             color="#FFA500", zorder=3, label="Northeast")
+             color="#FFA500", zorder=3, label="Northeast") # ,hatch='.O'
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['West'],
              left=cumulative_percentage_table['Northeast'],
-             color="#4b4b4c", zorder=3, label="West")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southeast'],
-    #          left=cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-    #          color="#676767", zorder=3, label="Southeast")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Midwest'],
-    #          left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West'] +
-    #               cumulative_percentage_table['Northeast'],
-    #          color="#808080", zorder=3, label="Midwest")
-    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southwest'],
-    #          left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table['Southeast'] +
-    #               cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-    #          color="#989898", zorder=3, label="Southwest")
+             color="#4b4b4c", zorder=3, label="West") # ,hatch='xx'
+    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southeast'],
+             left=cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
+             color="#676767", zorder=3, label="Southeast") #,hatch='.'
+    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Midwest'],
+             left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West'] +
+                  cumulative_percentage_table['Northeast'],
+             color="#808080", zorder=3, label="Midwest")
+    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southwest'],
+             left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table['Southeast'] +
+                  cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
+             color="#989898", zorder=3, label="Southwest") #,hatch='..'
 
     # Formatting
     for s in ["top", "right", "left"]:
@@ -102,26 +99,20 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     ax0.xaxis.set_major_formatter(mtick.PercentFormatter())
     ax0.legend(loc='lower center', ncol=5, bbox_to_anchor=(0.48, -0.3))
     ax0.text(0, 0.8,
-             'Loans taken by region',
-             fontsize=30,
+             'Which region sees the highest loan uptake by US citizens?',
+             fontsize=21,
              fontweight='bold',
              fontfamily='serif')
-    ax0.text(0, 0.7,
-             'with 5 regions',
-             fontsize=18,
-             fontweight='light',
-             fontfamily='serif')
-    ax0.text(0, 0.53,
-             'From the most to the least Kagglers in the world are Asia, America, Europe',
-             fontsize=13,
+    ax0.text(0, 0.67,
+             'Top 3 loan takers:  Northheast = 10,810 | West = 10,051 | Southeast = 8,343',
+             fontsize=15,
              fontweight='light',
              fontfamily='serif')
     ax0.text(0, 0.45,
-             'Others, Africa and Australia',
+             'Comprehensive Loan Information for Credit Risk',
              fontsize=13,
              fontweight='light',
              fontfamily='serif')
-
     plt.show()
 
 
