@@ -84,17 +84,17 @@ def creating_a_rectangle_layers_chart(cumulative_percentage_table):
     ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['West'],
              left=cumulative_percentage_table['Northeast'],
              color="#4b4b4c", zorder=3, label="West")
-    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southeast'],
-             left=cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-             color="#676767", zorder=3, label="Southeast")
-    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Midwest'],
-             left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West'] +
-                  cumulative_percentage_table['Northeast'],
-             color="#808080", zorder=3, label="Midwest")
-    ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southwest'],
-             left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table['Southeast'] +
-                  cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
-             color="#989898", zorder=3, label="Southwest")
+    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southeast'],
+    #          left=cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
+    #          color="#676767", zorder=3, label="Southeast")
+    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Midwest'],
+    #          left=cumulative_percentage_table['Southeast'] + cumulative_percentage_table['West'] +
+    #               cumulative_percentage_table['Northeast'],
+    #          color="#808080", zorder=3, label="Midwest")
+    # ax0.barh(cumulative_percentage_table.index, cumulative_percentage_table['Southwest'],
+    #          left=cumulative_percentage_table['Midwest'] + cumulative_percentage_table['Southeast'] +
+    #               cumulative_percentage_table['West'] + cumulative_percentage_table['Northeast'],
+    #          color="#989898", zorder=3, label="Southwest")
 
     # Formatting
     for s in ["top", "right", "left"]:
