@@ -26,17 +26,18 @@ def creating_the_data(his_region):
     for region_name, mini_df_per_region in groups_by_region:
         # print("The state name is: ", state_name)
         # print(mini_df_per_state)
-        avg_income_per_region = mini_df_per_region[
-            'annual_income'].mean()  # Midwest = 64,359.45 . Northeast = 72,319 , southeast = 67,252 , southwest = 72,438 , west = 70488
+        avg_income_per_region = mini_df_per_region['annual_income'].mean().round(1)  # Midwest = 64,359.45 . Northeast = 72,319 , southeast = 67,252 , southwest = 72,438 , west = 70488
         counting_the_number_of_laons = mini_df_per_region.shape[0]
         print('*')
 
         list_of_regions.append(region_name)
         list_of_avg_annual_income_per_region.append(avg_income_per_region)
         list_of_number_loans_per_region.append(counting_the_number_of_laons)
+
     df_starting = {'Region': list_of_regions,
                    'Avg_annual_income': list_of_avg_annual_income_per_region,
                    'Number_of_loans_taken': list_of_number_loans_per_region}
+
     final_table = pd.DataFrame(df_starting,
                                columns=['Region', 'Avg_annual_income', 'Number_of_loans_taken'])
     print('*')
