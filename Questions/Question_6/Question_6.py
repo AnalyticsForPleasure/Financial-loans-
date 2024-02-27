@@ -18,19 +18,49 @@ if __name__ == '__main__':
     max_int_rate = df['int_rate'].max()
     min_int_rate = df['int_rate'].min()
     print('*')
+
+    y_values_intrest_rate= df.loc[:,'int_rate'] # Y axis
+    x_values_loan_amount = df.loc[:,'loan_amount']
     # Generate random data for loan amount and interest rate
-    np.random.seed(0)  # for reproducibility
-    loan_amount = np.random.uniform(min_loan_amount, max_loan_amount, 10000) # 10000 rows / dots
-    int_rate = np.random.uniform(min_int_rate, max_int_rate, 10000)
+    #np.random.seed(0)  # for reproducibility
+    # loan_amount = np.random.uniform(min_loan_amount, max_loan_amount, 10000) # 10000 rows / dots
+    # int_rate = np.random.uniform(min_int_rate, max_int_rate, 10000)
 
     # Create DataFrame
-    df = pd.DataFrame({'Loan Amount': loan_amount, 'Interest Rate': int_rate})
+    df = pd.DataFrame({'loan_amount': x_values_loan_amount, 'int_rate': y_values_intrest_rate})
+
+
+
+    plt = plt.figure(figsize=(10, 5), )
+    ax = plt.add_subplot(111)
+
+    ax.text(-0.4, 97000,
+            'Loan Amounts vs. Interest Rates',
+            fontsize=17.5,
+            fontweight='bold',
+            fontfamily='serif')
+    ax.text(-0.4, 81500,
+            'Does a relationship exist between loan amounts and interest rates?',
+            fontsize=11.5,
+            fontweight='bold',
+            fontfamily='serif',
+            color="#4b4b4c")
 
     # Plot scatter plot
-    plt.figure(figsize=(10, 6))
-    plt.scatter(df['Loan Amount'], df['Interest Rate'], color='blue', alpha=0.5)
+    plt.figure(figsize=(10, 6),facecolor='#f6f5f5')
+    plt.scatter(df['loan_amount'], df['int_rate'], color="#FFA500", alpha=0.5, marker='o', facecolor='none',s=100)
     plt.title('Interest Rate vs Loan Amount', fontsize=16)
     plt.xlabel('Loan Amount', fontsize=14)
     plt.ylabel('Interest Rate', fontsize=14)
-    plt.grid(True)
+    plt.grid(False)
+
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    # Removing y-axis ticks and labels
+    # ax.tick_params(left=False)
+    # ax.set_yticklabels([])
+
+
     plt.show()
