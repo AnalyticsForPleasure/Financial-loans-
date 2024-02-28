@@ -31,20 +31,20 @@ if __name__ == '__main__':
 
 
 
-    plt = plt.figure(figsize=(10, 5), )
-    ax = plt.add_subplot(111)
-
-    ax.text(-0.4, 97000,
-            'Loan Amounts vs. Interest Rates',
-            fontsize=17.5,
-            fontweight='bold',
-            fontfamily='serif')
-    ax.text(-0.4, 81500,
-            'Does a relationship exist between loan amounts and interest rates?',
-            fontsize=11.5,
-            fontweight='bold',
-            fontfamily='serif',
-            color="#4b4b4c")
+    # fig = plt.figure(figsize=(10, 5), )
+    # ax = fig.add_subplot(111)
+    #
+    # ax.text(-0.4, 97000,
+    #         'Loan Amounts vs. Interest Rates',
+    #         fontsize=17.5,
+    #         fontweight='bold',
+    #         fontfamily='serif')
+    # ax.text(-0.4, 81500,
+    #         'Does a relationship exist between loan amounts and interest rates?',
+    #         fontsize=11.5,
+    #         fontweight='bold',
+    #         fontfamily='serif',
+    #         color="#4b4b4c")
 
     # Plot scatter plot
     plt.figure(figsize=(10, 6),facecolor='#f6f5f5')
@@ -54,10 +54,10 @@ if __name__ == '__main__':
     plt.ylabel('Interest Rate', fontsize=14)
     plt.grid(False)
 
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    # plt.spines['top'].set_visible(False)
+    # plt.spines['right'].set_visible(False)
+    # plt.spines['bottom'].set_visible(False)
+    # plt.spines['left'].set_visible(False)
     # Removing y-axis ticks and labels
     # ax.tick_params(left=False)
     # ax.set_yticklabels([])
