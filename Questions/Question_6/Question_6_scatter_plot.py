@@ -45,22 +45,42 @@ if __name__ == '__main__':
     #         fontweight='bold',
     #         fontfamily='serif',
     #         color="#4b4b4c")
+    background_color = "#f6f5f5"
+
+    plt.rcParams['figure.dpi'] = 400
+    fig = plt.figure(figsize=(10, 6), facecolor='#f6f5f5')
+    gs = fig.add_gridspec(1, 1)
+    gs.update(wspace=0, hspace=0)
+    ax0 = fig.add_subplot(gs[0, 0])
+    ax0.set_facecolor(background_color)
+    for s in ["right", "top"]:
+        ax0.spines[s].set_visible(True)
+    # Create boxplot
+
 
     # Plot scatter plot
-    plt.figure(figsize=(10, 6),facecolor='#f6f5f5')
+    #plt.figure(figsize=(10, 6),facecolor='#f6f5f5')
     plt.scatter(df['loan_amount'], df['int_rate'], color="#FFA500", alpha=0.5, marker='o', facecolor='none',s=100)
-    plt.title('Interest Rate vs Loan Amount', fontsize=16)
-    plt.xlabel('Loan Amount', fontsize=14)
-    plt.ylabel('Interest Rate', fontsize=14)
+
+    # Add labels and title
+    ax0.text(-0.5, 38900, 'Relationship between Interest Rate vs Loan Amount', color='black',
+             fontsize=14, ha='left', va='bottom', weight='bold', fontfamily='serif')
+    # ax0.text(-0.5, 38100, 'How does the variability in employment duration impact the amount of loans taken?',
+    #          color="#4b4b4c", fontsize=12, ha='left', weight='bold', va='top', fontfamily='serif')
+    #plt.title('Interest Rate vs Loan Amount', fontsize=20, weight='bold', fontfamily='serif')
+    plt.xlabel('Loan Amount', fontsize=14, weight='bold', fontfamily='serif')
+    plt.ylabel('Interest Rate', fontsize=14, weight='bold', fontfamily='serif')
     plt.grid(False)
 
-    # plt.spines['top'].set_visible(False)
+    #plt.spines['top'].set_visible(False)
     # plt.spines['right'].set_visible(False)
     # plt.spines['bottom'].set_visible(False)
     # plt.spines['left'].set_visible(False)
-    # Removing y-axis ticks and labels
-    # ax.tick_params(left=False)
-    # ax.set_yticklabels([])
+    #Removing y-axis ticks and labels
+    ax0.tick_params(left=False)
+    ax0.set_yticklabels([])
 
+    # Show plot
+    plt.savefig('Relationship_between_int_rate_to_loan_amount.jpg')#,# dpi=250, bbox_inches='tight')
 
     plt.show()
