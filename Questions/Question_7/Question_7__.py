@@ -5,7 +5,7 @@ import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
 
 # **************************************************************************************************************
-# Function  name:
+# Function  name: creating_a_sub_grade_table
 # input:
 # return value:
 # ***************************************************************************************************************
@@ -39,29 +39,16 @@ def creating_a_sub_grade_table(table_specific_region, specific_region):
 
 
 
-
-
-
-    # old_names = ['A','B','C','D','E','F','G']
-    # new_names = ["Borrowers with excellent credit history,\n high income,\n low debt-to-income ratio,\nand strong employment stability", # A
-    #             "Borrowers with good credit history,\n moderate income,\n manageable debt-to-income ratio,\nand stable employment", # B
-    #             "Borrowers with fair credit history,\n moderate income,\n higher debt-to-income ratio,\nand somewhat stable employment", #C
-    #             "Borrowers with average credit history,\n moderate income,\n higher debt-to-income ratio,\nand less stable employment", # D
-    #             "Borrowers with average credit history,\n moderate income,\n higher debt-to-income ratio,\nand less stable employment", # E
-    #             "Borrowers with poor credit history,\n low income,\n high debt-to-income ratio,\nand unstable employment", # F
-    #             "Borrowers with very poor credit history,\nvery low income,\n very high debt-to-income ratio,\n and highly unstable employment"] #G
-    #
-    # pivot_df.rename(columns=dict(zip(old_names, new_names)), inplace=False)
     pivot_df= pivot_df.T
     print('*')
     return pivot_df
 
 # **************************************************************************************************************
-# Function  name:
+# Function  name: creating_the_chart_by_
 # input:
 # return value:
 # ***************************************************************************************************************
-def creating_the_chart(final_table,distinct_colors):
+def creating_the_chart_by_grade_groups(final_table, distinct_colors,specific_region):
 
 
     # Setting up figure and axes
@@ -78,11 +65,11 @@ def creating_the_chart(final_table,distinct_colors):
 
     #orange_palette = sns.color_palette("Oranges", 5)[::-1]
     ax0.grid(color='black', linestyle=':', axis='y', zorder=0, dashes=(1, 5))
-    ax0.bar(x, final_table["1"], width=bar_width, color=distinct_colors[0], label="A", zorder=3)
-    ax0.bar(x + bar_width + 0.01, final_table["2"], width=bar_width, color=distinct_colors[1], label="B", zorder=3)
-    ax0.bar(x + bar_width * 2 + 0.01 * 2, final_table["3"], width=bar_width, color=distinct_colors[2], label="C", zorder=3)
-    ax0.bar(x + bar_width * 3 + 0.01 * 3, final_table["4"], width=bar_width, color=distinct_colors[3], label="D", zorder=3)
-    ax0.bar(x + bar_width * 4 + 0.01 * 4, final_table["5"], width=bar_width, color=distinct_colors[4], label="E", zorder=3)
+    ax0.bar(x, final_table["1"], width=bar_width, color=distinct_colors[0], label="1", zorder=3)
+    ax0.bar(x + bar_width + 0.01, final_table["2"], width=bar_width, color=distinct_colors[1], label="2", zorder=3)
+    ax0.bar(x + bar_width * 2 + 0.01 * 2, final_table["3"], width=bar_width, color=distinct_colors[2], label="3", zorder=3)
+    ax0.bar(x + bar_width * 3 + 0.01 * 3, final_table["4"], width=bar_width, color=distinct_colors[3], label="4", zorder=3)
+    ax0.bar(x + bar_width * 4 + 0.01 * 4, final_table["5"], width=bar_width, color=distinct_colors[4], label="5", zorder=3)
 
 
     # Fix the x-axes.
@@ -90,15 +77,15 @@ def creating_the_chart(final_table,distinct_colors):
     x_labels = list(final_table.index)
     ax0.set_xticklabels(x_labels)
 
-    ax0.text(-0.5, -180, 'Borrowers with excellent credit history,\nhigh income,\nlow debt-to-income ratio,\nand strong employment stability', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(-0.5, -230, 'Borrowers with excellent credit history,\nhigh income,\nlow debt-to-income ratio,\nand strong employment stability', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(0.7, 700, 'Borrowers with good credit history,\nmoderate income,\nmanageable debt-to-income ratio,\nand stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(1.8, -180, 'Borrowers with fair credit history,\nmoderate income,\n higher debt-to-income ratio,\nand somewhat stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(1.8, -230, 'Borrowers with fair credit history,\nmoderate income,\n higher debt-to-income ratio,\nand somewhat stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(2.9, 700, 'Borrowers with average credit history,\nmoderate income,\n higher debt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(4, -180, 'Borrowers with below-average credit history,\nlower income,\nhigher debt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(4, -230, 'Borrowers with below-average credit history,\nlower income,\nhigher debt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(5.1, 700, 'Borrowers with poor credit history,\nlow income,\nhigh debt-to-income ratio,\nand unstable employment', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(6.2, -80,'Borrowers with very poor credit history,\nvery low income,\nvery high debt-to-income ratio,\nand highly unstable employment',fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(6.2, -230,'Borrowers with very poor credit history,\nvery low income,\nvery high debt-to-income ratio,\nand highly unstable employment',fontsize=8, fontweight='bold', fontfamily='serif')
 
-    ax0.text(-0.5, 1090, 'Borrowers credit history', fontsize=20, fontweight='bold', fontfamily='serif')
+    ax0.text(-0.5, 1090, f'Borrowers credit history - {specific_region}', fontsize=20, fontweight='bold', fontfamily='serif')
     ax0.text(-0.5, 1030, 'Grading system consists of grades A through G', fontsize=13, fontweight='light',fontfamily='serif')
 
     for s in ["top", "right", "left"]:
@@ -107,7 +94,7 @@ def creating_the_chart(final_table,distinct_colors):
     ax0.legend(loc='lower center', ncol=4, bbox_to_anchor=(0.48, -0.48))
     print('*')
 
-    plt.savefig('result.jpg', dpi=250, bbox_inches='tight')
+    plt.savefig(f"grade_loans_{specific_region}.jpg", dpi=250, bbox_inches='tight')
     plt.show()
 
 
@@ -201,6 +188,6 @@ if __name__ == '__main__':
     for specific_region in Regions :
         table_specific_region = df.loc[df['Region'] == specific_region, :]
         res = creating_a_sub_grade_table(table_specific_region, specific_region)
-        creating_the_chart(res, distinct_colors)
+        creating_the_chart_by_grade_groups(res, distinct_colors,specific_region)
 print('*')
 
