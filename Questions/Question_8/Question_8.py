@@ -39,7 +39,7 @@ def categorize_interest_rate(rate):
 # input:
 # return value:
 # ***************************************************************************************************************
-def creating_the_dataframe_correlation_for_each_region(Region_selected_df):
+def creating_the_dataframe_correlation_for_each_region(Region_selected_df,Region_selected):
     max_int_rate = Region_selected_df['int_rate'].max()
     min_int_rate = Region_selected_df['int_rate'].min()
     unique_purpose = pd.unique(Region_selected_df['purpose'])
@@ -54,11 +54,99 @@ def creating_the_dataframe_correlation_for_each_region(Region_selected_df):
     # Apply the custom function to categorize interest rates into groups
     Region_selected_df['interest_rate_groups'] = Region_selected_df['int_rate'].apply(categorize_interest_rate)
 
-    Region_selected_df
+    three_columns = Region_selected_df.loc[:,['interest_rate_groups',"int_rate","purpose"]]
+    print('*')
+
+    relevant_reasons_for_taking_loans = ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical']
+
+    final_table = three_columns[three_columns['purpose'].isin(relevant_reasons_for_taking_loans)]
+
+    output_result= pd.crosstab(final_table["interest_rate_groups"],final_table["purpose"])
+
     print('*')
 
 
-    return
+    return output_result
+
+
+
+
+def creating_the_correlation_chart_for_each_region(final_table):
+    fig = plt.figure(figsize=(15, 10))  # create figure
+    gs = fig.add_gridspec(2, 3)
+    gs.update(wspace=0.2, hspace=-0.4)
+    ax0 = fig.add_subplot(gs[0, 0])
+    ax1 = fig.add_subplot(gs[0, 1])
+    # ax2 = fig.add_subplot(gs[0, 2])
+    # ax3 = fig.add_subplot(gs[1, 0])
+    # ax4 = fig.add_subplot(gs[1, 1])
+    # ax5 = fig.add_subplot(gs[1, 2])
+    background_color = "#fbfbfb"
+    fig.patch.set_facecolor(background_color)  # figure background color
+    ax0.set_facecolor(background_color)  # axes background color
+    ax1.set_facecolor(background_color)  # axes background color
+    # ax2.set_facecolor(background_color)  # axes background color
+    # ax3.set_facecolor(background_color)  # axes background color
+    # ax4.set_facecolor(background_color)  # axes background color
+    # ax5.set_facecolor(background_color)  # axes background color
+    colors = ["#fbfbfb", "#4b4b4c", "#FFA500"]
+    colormap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
+    sns.heatmap(ax=ax0,
+                data=final_table,
+                linewidths=.2,
+                square=True,
+                cbar_kws={"orientation": "horizontal"},
+                cbar=False,
+                cmap=colormap)
+    sns.heatmap(ax=ax1, data=final_table, linewidths=.1,
+                square=True,
+                cbar_kws={"orientation": "horizontal"},
+                cbar=False,
+                cmap=colormap)
+
+    ax0.text(-2.5, -1.7,
+             'Exploring the Relationship Between Loan Purpose and Interest Rates',
+             fontsize=22, fontweight='bold', fontfamily='serif')
+    ax0.text(-2.5, -1.1,
+             'Categorical Comparison: Loan Purpose versus Interest Rate Correlation Across States',
+             fontsize=13, fontweight='light', fontfamily='serif')
+    ax0.text(0, -0.2, 'West', fontsize=15, fontweight='bold', fontfamily='serif')
+    ax1.text(0, -0.2, 'Southwest', fontsize=15, fontweight='bold', fontfamily='serif')
+
+    #ax0.set_xticklabels(['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical'])
+    #ax0.tick_params(bottom=True)
+    ax1.set_xticklabels("")
+    ax1.set_yticklabels("")
+    ax1.tick_params(left=False)
+    # ax1.tick_params(bottom=False)
+    # ax2.set_xticklabels("")
+    # ax2.set_yticklabels("")
+    # ax2.tick_params(left=False)
+    # ax2.tick_params(bottom=False)
+    # ax3.set_xticklabels(
+    #     ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical'],rotation=270)
+    # ax3.tick_params(left=False)
+    # ax4.set_xticklabels("")
+    # ax4.set_yticklabels("")
+    # ax4.tick_params(left=False)
+    # ax4.set_yticklabels("")
+    # ax4.tick_params(left=False)
+    # ax4.set_xticklabels(
+    #     ['Debt consolidation', 'redit card', 'home improvement', 'house', 'major purchase', 'small business', 'car','wedding', 'medical'],rotation=270)
+    # ax5.set_yticklabels("")
+    # ax5.tick_params(left=False)
+    # ax5.set_xticklabels(
+    #     ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical'],rotation=270)
+    # ax0.set_xlabel("")
+    # ax1.set_xlabel("")
+    # ax1.set_ylabel("")
+    # ax2.set_xlabel("")
+    # ax2.set_ylabel("")
+    # ax4.set_ylabel("")
+    # ax5.set_ylabel("")
+    plt.savefig("my_corrrelation.jpg", dpi=250, bbox_inches='tight')
+    plt.show()
+
 
 if __name__ == '__main__':
 
@@ -139,7 +227,8 @@ if __name__ == '__main__':
 
     for Region_selected in Regions:
         Region_selected_df = df.loc[df['Region'] == Region_selected, :]
-        res = creating_the_dataframe_correlation_for_each_region(Region_selected_df)
+        res = creating_the_dataframe_correlation_for_each_region(Region_selected_df,Region_selected)
+        creating_the_correlation_chart_for_each_region(res)
 
 
 
