@@ -55,9 +55,9 @@ def creating_the_dataframe_correlation_for_each_region(selected_df):
     interest_rate_list = ['0% - 4%', '4% - 8%', '8% - 12%', '12% - 16%', '16% - 20%', '20% - 24%', '24% - 28%']
 
     # Apply the custom function to categorize interest rates into groups
-    selected_df['interest_rate_groups'] = selected_df['int_rate'].apply(categorize_interest_rate)
+    selected_df['Interest Rate on Loans'] = selected_df['int_rate'].apply(categorize_interest_rate)
 
-    three_columns = selected_df.loc[:,['interest_rate_groups',"int_rate","purpose", 'Region']]
+    three_columns = selected_df.loc[:,['Interest Rate on Loans',"int_rate","purpose", 'Region']]
     print('*')
 
     # Filtering th X-axis by this closed list
@@ -77,19 +77,19 @@ def creating_the_dataframe_correlation_for_each_region(selected_df):
 def creating_the_correlation_chart_for_each_region(final_table):
 
     filtering_West_df = final_table.loc[final_table['Region'] == 'West']
-    df_West= pd.crosstab(filtering_West_df["interest_rate_groups"],filtering_West_df["purpose"])
+    df_West= pd.crosstab(filtering_West_df["Interest Rate on Loans"],filtering_West_df["purpose"])
 
     filtering_Southwest_df = final_table.loc[final_table['Region'] == 'Southwest']
-    df_Southwest = pd.crosstab(filtering_Southwest_df["interest_rate_groups"], filtering_Southwest_df["purpose"])
+    df_Southwest = pd.crosstab(filtering_Southwest_df["Interest Rate on Loans"], filtering_Southwest_df["purpose"])
 
     filtering_Midwest_df = final_table.loc[final_table['Region'] == 'Midwest']
-    df_Midwest = pd.crosstab(filtering_Midwest_df["interest_rate_groups"], filtering_Midwest_df["purpose"])
+    df_Midwest = pd.crosstab(filtering_Midwest_df["Interest Rate on Loans"], filtering_Midwest_df["purpose"])
 
     filtering_Southeast_df = final_table.loc[final_table['Region'] == 'Southeast']
-    df_Southeast = pd.crosstab(filtering_Southeast_df["interest_rate_groups"], filtering_Southeast_df["purpose"])
+    df_Southeast = pd.crosstab(filtering_Southeast_df["Interest Rate on Loans"], filtering_Southeast_df["purpose"])
 
     filtering_Northeast_df = final_table.loc[final_table['Region'] == 'Northeast']
-    df_Northeast = pd.crosstab(filtering_Northeast_df["interest_rate_groups"], filtering_Northeast_df["purpose"])
+    df_Northeast = pd.crosstab(filtering_Northeast_df["Interest Rate on Loans"], filtering_Northeast_df["purpose"])
 
     print('*')
 
@@ -140,7 +140,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
                 cmap=colormap,
-                fmt='.3g',
+                fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax1,
                 data=df_Southwest,
@@ -150,7 +150,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
                 cmap=colormap,
-                fmt='.3g',
+                fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax5,
                 data=df_Midwest,
@@ -160,7 +160,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
                 cmap=colormap,
-                fmt='.3g',
+                fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax3,
                 data=df_Southeast,
@@ -170,7 +170,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
                 cmap=colormap,
-                fmt='.3g',
+                fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax4,
                 data=df_Northeast,
@@ -180,7 +180,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
                 cmap=colormap,
-                fmt='.3g',
+                fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     # sns.heatmap(ax=ax5,
     #             data=df_Northeast,
@@ -205,13 +205,15 @@ def creating_the_correlation_chart_for_each_region(final_table):
 
     ax0.set_xticklabels("")
     ax0.tick_params(bottom=False)
+    y_labels = ['0% - 4%', '4% - 8%', '8% - 12%', '12% - 16%', '16% - 20%']
+    ax0.set_yticklabels(y_labels, rotation=0, weight='bold', color='black')
 
     ax1.set_xticklabels("")
     ax1.set_yticklabels("")
     ax1.tick_params(left=False)
     ax1.tick_params(bottom=False)
     # ax2.set_xticklabels("")
-    # ax2.set_yticklabels("")
+    #ax2.set_yticklabels("")
     # ax2.tick_params(left=False)
     # ax2.tick_params(bottom=False)
     # ax3.set_xticklabels(
@@ -228,7 +230,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
         #ax.set_yticklabels(y_labels, rotation=0, weight='bold', color='black')
 
 
-    #ax3.set_yticklabels(y_labels, rotation= 45, weight='bold', color='black')
+    ax3.set_yticklabels(y_labels, rotation= 0, weight='bold', color='black')
     #ax4.set_xticklabels("")
     ax4.set_yticklabels("")
     ax4.tick_params(left=False)
