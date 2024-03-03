@@ -32,23 +32,15 @@ def categorize_interest_rate(rate):
     else:
         return 'Other'
 
-
-
 # **************************************************************************************************************
 # Function  name: creating_the_dataframe_correlation_for_each_region
 # input:
 # return value:
 # ***************************************************************************************************************
-def creating_the_dataframe_correlation_for_each_region(selected_df):#,Region_selected):
+def creating_the_dataframe_correlation_for_each_region(selected_df):
     Regions = ['West', 'Southwest', 'Midwest', 'Southeast', 'Northeast']
 
-    Region_selected = 'Midwest'
-    #Region_selected_df = selected_df.loc[selected_df['Region'] == Region_selected, :]
-    West_selected_df = selected_df.loc[selected_df['Region'] == 'West']
-    Southwest_selected_df = selected_df.loc[selected_df['Region'] == 'Southwest']
-    Midwest_selected_df = selected_df.loc[selected_df['Region'] == 'Midwest']
-    Southeast_selected_df = selected_df.loc[selected_df['Region'] == 'Southeast']
-    Northeast_selected_df = selected_df.loc[selected_df['Region'] == 'Northeast']
+
 
 
     # max_int_rate = Region_selected_df['int_rate'].max()
@@ -69,7 +61,7 @@ def creating_the_dataframe_correlation_for_each_region(selected_df):#,Region_sel
     print('*')
 
     # Filtering th X-axis by this closed list
-    relevant_reasons_for_taking_loans = ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical']
+    relevant_reasons_for_taking_loans = ['Debt consolidation', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical'] #'redit card'
     final_table = three_columns[three_columns['purpose'].isin(relevant_reasons_for_taking_loans)]
 
     #output_result= pd.crosstab(final_table["interest_rate_groups"],final_table["purpose"])
@@ -121,20 +113,25 @@ def creating_the_correlation_chart_for_each_region(final_table):
     ax3.set_facecolor(background_color)  # axes background color
     ax4.set_facecolor(background_color)  # axes background color
     ax5.set_facecolor(background_color)  # axes background color
-    colors = [ "#4b4b4c", "#FFA500"]
+    # colors = [ "#4b4b4c", "#FFA500"]
+    #
+    # # Reverse the order of colors
+    # #colors.reverse()
+    #
+    # # Create a colormap using LinearSegmentedColormap
+    # cmap = LinearSegmentedColormap.from_list('OrangeToGray', colors)
+    #
+    # # Generate 5 distinct colors from the colormap
+    # distinct_colors = [cmap(i) for i in np.linspace(0, 1, 50)]
+    # print('*')
 
-    # Reverse the order of colors
-    colors.reverse()
-
-    # Create a colormap using LinearSegmentedColormap
-    cmap = LinearSegmentedColormap.from_list('OrangeToGray', colors)
-
-    # Generate 5 distinct colors from the colormap
-    distinct_colors = [cmap(i) for i in np.linspace(0, 1, 50)]
-    print('*')
-
-
+    colors = ["#fbfbfb", "#4b4b4c","#FFA500"]
     colormap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
+
+    # Print the generated distinct colors
+    print(colormap)
+
+    #colormap = matplotlib.colors.LinearSegmentedColormap.from_list("", colors)
     sns.heatmap(ax=ax0,
                 data=df_West,
                 linewidths=.2,
@@ -142,7 +139,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar_kws={"orientation": "horizontal"},
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
-                cmap=distinct_colors,
+                cmap=colormap,
                 fmt='.3g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax1,
@@ -152,7 +149,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar_kws={"orientation": "horizontal"},
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
-                cmap=distinct_colors,
+                cmap=colormap,
                 fmt='.3g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax5,
@@ -162,7 +159,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar_kws={"orientation": "horizontal"},
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
-                cmap=distinct_colors,
+                cmap=colormap,
                 fmt='.3g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax3,
@@ -172,7 +169,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar_kws={"orientation": "horizontal"},
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
-                cmap=distinct_colors,
+                cmap=colormap,
                 fmt='.3g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax4,
@@ -182,7 +179,7 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cbar_kws={"orientation": "horizontal"},
                 cbar=False,
                 annot=True,  # Add annotations (numbers) over the cells
-                cmap=distinct_colors,
+                cmap=colormap,
                 fmt='.3g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
     # sns.heatmap(ax=ax5,
@@ -218,9 +215,21 @@ def creating_the_correlation_chart_for_each_region(final_table):
     # ax2.tick_params(left=False)
     # ax2.tick_params(bottom=False)
     # ax3.set_xticklabels(
-    # ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical']) #,rotation=270
-    ax3.tick_params(left=False)
-    ax4.set_xticklabels("")
+    #x_labels =  ['Debt\nconsolidation', 'Credit\ncard', 'Home\nimprovement','House', 'major purchase', 'small\nbusiness','car','wedding','medical']) #,rotation=270
+    #ax3.tick_params(left=True) # False
+
+    # Customize x-axis and y-axis labels
+    x_labels =  ['Debt\nconsolidation', 'Credit-card', 'Home improvement','House', 'major purchase', 'small\nbusiness','Car','Wedding'] #'] # 'medical'
+    y_labels = ['0% - 4%', '4% - 8%', '8% - 12%', '12% - 16%', '16% - 20%']#, '20% - 24%']#, '24% - 28%']
+
+    # loop iterates over the two subplots (ax1 and ax2)
+    for ax in [ax3, ax4 ,ax5]:
+        ax.set_xticklabels(x_labels, rotation=45, ha='right', weight='bold', color='black')
+        #ax.set_yticklabels(y_labels, rotation=0, weight='bold', color='black')
+
+
+    #ax3.set_yticklabels(y_labels, rotation= 45, weight='bold', color='black')
+    #ax4.set_xticklabels("")
     ax4.set_yticklabels("")
     ax4.tick_params(left=False)
     ax4.set_yticklabels("")
@@ -318,11 +327,6 @@ if __name__ == '__main__':
 
     Regions = ['West', 'Southwest', 'Mideast', 'Southeast', 'Northeast']
 
-    #Specific_region =[]
-
-
-    #for Region_selected in Regions:
-    #Region_selected_df = df.loc[df['Region'] == Region_selected, :]
     res = creating_the_dataframe_correlation_for_each_region(df)
     creating_the_correlation_chart_for_each_region(res)
 
