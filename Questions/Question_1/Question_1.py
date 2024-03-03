@@ -70,19 +70,30 @@ def creating_a_treemap_count_for_each_state(result_table):
     sizes =list(result_table.loc[:,'Count_of_loans_within_a_particular_state'])
 
     # Define a colormap with different shades of blue
-    cmap = plt.cm.get_cmap('Blues', len(labels_with_sizes))
+    #cmap = plt.cm.get_cmap('Oranges', len(labels_with_sizes))
 
     # Generate a list of blue color strings
-    blue_colors = [cmap(i) for i in reversed(range(len(labels_with_sizes)))]
+    #blue_colors = [cmap(i) for i in reversed(range(len(labels_with_sizes)))]
 
     # Plotting
-    #plt.figure(figsize=(8, 6))
-    squarify.plot(sizes=sizes, label=labels_with_sizes, color=blue_colors, alpha=0.7,pad=True,  text_kwargs={'fontsize':10,'fontname':'Franklin Gothic Medium Cond'})
+    #plt.figure(figsize=(10, 4))
+    squarify.plot(sizes=sizes, label=labels_with_sizes, color="#FFA500", alpha=0.7,pad=True,  text_kwargs={'fontsize':8.2,'fontfamily':'serif','fontweight':'bold'})
     # Adding title and axis labels
-    plt.title("Example Treemap")
+    #plt.title("Example Treemap")
     plt.axis('off')  # Turn off axis
     # Display the plot
-    plt.title('Count of Loans in Each State with More Than 100 Loans' ,fontsize=30, weight='bold',fontname='Franklin Gothic Medium Cond', color = 'dimgrey')
+    #plt.title('Count of Loans in Each State with More Than 100 Loans' ,fontsize=30, weight='bold',fontfamily='serif', color = 'dimgrey')
+    plt.text(1.5 , 110,
+             'Loan Amounts Distributed Across U.S. States',
+             fontsize=25,
+             fontweight='bold',
+             fontfamily='serif')
+    plt.text(1.5 , 101,
+             'Top 3 States with Highest Loan Uptake :  California => 6,894  | New York => 3,701  |  Florida => 2,773 ',
+             fontsize=16,
+             fontweight='light',
+             fontfamily='serif')
+
     plt.savefig('treemap_count_for_each_state.jpg', dpi=250, bbox_inches='tight')
     plt.show()
 
@@ -93,6 +104,9 @@ if __name__ == '__main__':
     df = pd.read_csv('/home/shay_diy/PycharmProjects/Financial_loans/Data/financial_loan.csv')
     print('*')
 
+    column_headers = list(df.columns.values)
+    print("The Column Header :", column_headers)
+    print('*')
 # **************************************************************************************************************
 # Starting with getting a short glance information about the data
 # ***************************************************************************************************************
