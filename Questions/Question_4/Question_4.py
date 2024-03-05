@@ -5,11 +5,18 @@ import squarify    # You need to install this library using pip: pip install squ
 import seaborn as sns
 import matplotlib.ticker as mtick
 
-#import dataframe_image as dfi
+import dataframe_image as dfi
+
 import matplotlib.pyplot as plt
 
 
 ## Source: https://www.kaggle.com/datasets/nezukokamaado/auto-loan-dataset?select=financial_loan.csv
+
+
+# Define a function to format the numbers
+def format_income(number):
+    return '{:,.0f}'.format(number)
+
 
 # **************************************************************************************************************
 # Function  name: creating_the_data
@@ -40,7 +47,20 @@ def creating_the_data(his_region):
 
     final_table = pd.DataFrame(df_starting,
                                columns=['Region', 'Avg_annual_income', 'Number_of_loans_taken'])
+
+    # Apply the function to the "Avg annual income" column
+    final_table['Avg_annual_income'] = final_table['Avg_annual_income'].apply(format_income)
     print('*')
+    table_style = final_table
+
+    # Adding style to the dataframe
+    rows_to_mark = {0,1,2,3,4} # name of the index
+    highlighted_df = table_style.style.apply(lambda x: ['background: #ffe4b2' if x.name in rows_to_mark else '' for i in x],axis=1)
+    highlighted_df.hide(axis='index')
+    dfi.export(highlighted_df, filename='/Questions/Question_4/style_table.png')
+
+    print('*')
+
     return final_table
 
 # **************************************************************************************************************
@@ -48,8 +68,6 @@ def creating_the_data(his_region):
 # input:
 # return value:
 # ***************************************************************************************************************
-
-
 def creating_the_column_chart(final_table):
 
     # Data
@@ -75,7 +93,7 @@ def creating_the_column_chart(final_table):
                  fontfamily='serif')
     # Adding labels and title
     ax.set_xlabel('Region', fontweight='bold', fontfamily='serif')
-    ax.set_ylabel('Counts', fontweight='bold', fontfamily='serif')
+    ax.set_ylabel('Counts', fontweight='bold', fontfamily='serif') # TODO: Change the 'Counts' to another name
     # ax.set_title('Is there any correlation between the average income in each region and the number of loans taken?', fontweight='bold', fontfamily='serif')
     ax.text(-0.4, 97000,
             'Average Income vs. Number of Loans',
@@ -100,7 +118,7 @@ def creating_the_column_chart(final_table):
     ax.set_yticklabels([])
     # Adding legend at the bottom
     ax.legend(loc='lower center', ncol=2, bbox_to_anchor=(0.5, -0.3))
-    plt.savefig('avg_income_1.jpg', dpi=250, bbox_inches='tight')
+    plt.savefig('image_Question_4.jpg', dpi=250, bbox_inches='tight')
     # Show plot
     plt.show()
 
