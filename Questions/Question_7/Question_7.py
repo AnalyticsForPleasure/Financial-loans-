@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
+import dataframe_image as dfi
 
 # **************************************************************************************************************
 # Function  name: creating_a_sub_grade_table
@@ -38,7 +39,30 @@ def creating_a_sub_grade_table(df):
     pivot_df = final_table.pivot(index='Sub_grade', columns='grade', values='Counting_the_loans_within_a_Sub_grade')
 
     pivot_df= pivot_df.T
+
+    # Adding style:
+    pivot_df
+    #res_2 = list(pivot_df.columns.values)
+    table_style = pivot_df
+
+    # Changing the column rows name :
+    old_names = ['1', '2', '3', '4', '5']  ##list(table_style.columns.values)
+    new_names = ['Sub-grades 1', 'Sub-grades 2', 'Sub-grades 3', 'Sub-grades 4', 'Sub-grades 5']
+    table_style = table_style.rename(columns=dict(zip(old_names, new_names)), inplace=False)
+
+    # Changing the  rows index names :
+    # Add "Grade " to each index row
+    table_style.index = ['Grade ' + str(index) for index in table_style.index]
+
+    # Adding style to the dataframe
+    rows_to_mark = {0,1,2,3,4,5,6} # name of the index
+
+    # Adding the style:
+    highlighted_df = table_style.style.apply(lambda x: ['background: #ffe4b2' if x.name in rows_to_mark else '' for i in x],axis=1)
+    #highlighted_df.hide(axis='index')
+    dfi.export(highlighted_df, filename='/home/shay_diy/PycharmProjects/Financial_loans/Questions/Question_7/grid_matrix_style.png') #/home/shay_diy/PycharmProjects/Financial_loans/Questions/Question_7
     print('*')
+
     return pivot_df
 
 # **************************************************************************************************************
@@ -75,14 +99,14 @@ def creating_the_chart_by_grade_groups(final_table, distinct_colors):
     ax0.set_xticklabels(x_labels)
 
     ax0.text(-0.3, -800, 'Borrowers with excellent credit history,\nhigh income,\nlow debt-to-income ratio,\nand strong employment stability', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(0.65, 3000, 'Borrowers with good credit history,\nmoderate income,\nmanageable debt-to-income ratio,\nand stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(0.65, 3020, 'Borrowers with good credit history,\nmoderate income,\nmanageable debt-to-income ratio,\nand stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(1.75, -800, 'Borrowers with fair credit history,\nmoderate income,\n higher debt-to-income ratio,\nand somewhat stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(2.8, 3000, 'Borrowers with average credit history,\nmoderate income,\n higher debt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(2.8, 3020, 'Borrowers with average credit history,\nmoderate income,\n higher debt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(3.75, -800, 'Borrowers with below-average credit\nhistory, lower income, higher\ndebt-to-income ratio,\nand less stable employment', fontsize=8, fontweight='bold', fontfamily='serif')
-    ax0.text(4.85, 3000, 'Borrowers with poor credit history,\nlow income,\nhigh debt-to-income ratio,\nand unstable employment', fontsize=8, fontweight='bold', fontfamily='serif')
+    ax0.text(4.85, 3020, 'Borrowers with poor credit history,\nlow income,\nhigh debt-to-income ratio,\nand unstable employment', fontsize=8, fontweight='bold', fontfamily='serif')
     ax0.text(5.85, -800,'Borrowers with very poor credit history,\nvery low income,\nvery high debt-to-income ratio,\nand highly unstable employment',fontsize=8, fontweight='bold', fontfamily='serif')
 
-    ax0.text(-0.5, 4450,'Borrowers credit history', fontsize=20, fontweight='bold', fontfamily='serif')
+    ax0.text(-0.5, 4450,'Borrowers credit history', fontsize=30, fontweight='bold', fontfamily='serif')
     ax0.text(-0.5, 4150,"Assessing Borrower Risk: A Comprehensive Grading System from A to G", fontsize=13, fontweight='light',fontfamily='serif')
 
     for s in ["top", "right", "left"]:
@@ -165,8 +189,7 @@ if __name__ == '__main__':
         'Northeast': ['CT', 'DC', 'DE', 'MA', 'MD', 'ME', 'NH', 'NJ', 'NY', 'PA', 'RI', 'VT'],
     }
     # Create a new column to classify states into regions based on the dictionary
-    df['Region'] = df['address_state'].map(
-        {state: region for region, states in region_dict.items() for state in states}).fillna('Other')  # TODO: ask
+    df['Region'] = df['address_state'].map({state: region for region, states in region_dict.items() for state in states}).fillna('Other')  # TODO: ask
 
     Regions = ['West', 'Southwest', 'Mideast', 'Southeast', 'Northeast']
 
