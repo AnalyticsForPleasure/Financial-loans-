@@ -103,16 +103,16 @@ def creating_the_correlation_chart_for_each_region(final_table):
     ax1 = fig.add_subplot(gs[0, 1])
     #ax2 = fig.add_subplot(gs[0, 2])
     ax3 = fig.add_subplot(gs[1, 0])
-    ax4 = fig.add_subplot(gs[1, 1])
-    ax5 = fig.add_subplot(gs[1, 2])
+    # ax4 = fig.add_subplot(gs[1, 1])
+    # ax5 = fig.add_subplot(gs[1, 2])
     background_color = "#fbfbfb"
     fig.patch.set_facecolor(background_color)  # figure background color
     ax0.set_facecolor(background_color)  # axes background color
     ax1.set_facecolor(background_color)  # axes background color
     #ax2.set_facecolor(background_color)  # axes background color
     ax3.set_facecolor(background_color)  # axes background color
-    ax4.set_facecolor(background_color)  # axes background color
-    ax5.set_facecolor(background_color)  # axes background color
+    # ax4.set_facecolor(background_color)  # axes background color
+    # ax5.set_facecolor(background_color)  # axes background color
     # colors = [ "#4b4b4c", "#FFA500"]
     #
     # # Reverse the order of colors
@@ -152,27 +152,17 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cmap=colormap,
                 fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
-    sns.heatmap(ax=ax5,
-                data=df_Midwest,
-                linewidths=.1,
-                square=True,
-                cbar_kws={"orientation": "horizontal"},
-                cbar=False,
-                annot=True,  # Add annotations (numbers) over the cells
-                cmap=colormap,
-                fmt='.4g',
-                annot_kws={"fontsize": 8,"fontweight": "bold"})
+    # sns.heatmap(ax=ax5,
+    #             data=df_Midwest,
+    #             linewidths=.1,
+    #             square=True,
+    #             cbar_kws={"orientation": "horizontal"},
+    #             cbar=False,
+    #             annot=True,  # Add annotations (numbers) over the cells
+    #             cmap=colormap,
+    #             fmt='.4g',
+    #             annot_kws={"fontsize": 8,"fontweight": "bold"})
     sns.heatmap(ax=ax3,
-                data=df_Southeast,
-                linewidths=.1,
-                square=True,
-                cbar_kws={"orientation": "horizontal"},
-                cbar=False,
-                annot=True,  # Add annotations (numbers) over the cells
-                cmap=colormap,
-                fmt='.4g',
-                annot_kws={"fontsize": 8,"fontweight": "bold"})
-    sns.heatmap(ax=ax4,
                 data=df_Northeast,
                 linewidths=.1,
                 square=True,
@@ -182,7 +172,17 @@ def creating_the_correlation_chart_for_each_region(final_table):
                 cmap=colormap,
                 fmt='.4g',
                 annot_kws={"fontsize": 8,"fontweight": "bold"})
-    # sns.heatmap(ax=ax5,
+    # sns.heatmap(ax=ax4,
+    #             data=df_Southeast, # df_Southeast
+    #             linewidths=.1,
+    #             square=True,
+    #             cbar_kws={"orientation": "horizontal"},
+    #             cbar=False,
+    #             annot=True,  # Add annotations (numbers) over the cells
+    #             cmap=colormap,
+    #             fmt='.4g',
+    #             annot_kws={"fontsize": 8,"fontweight": "bold"})
+    # # sns.heatmap(ax=ax5,
     #             data=df_Northeast,
     #             linewidths=.1,
     #             square=True,
@@ -200,8 +200,8 @@ def creating_the_correlation_chart_for_each_region(final_table):
     ax1.text(0, -0.2, 'Southwest', fontsize=15, fontweight='bold', fontfamily='serif')
     #ax2.text(0, -0.2, 'Midwest', fontsize=15, fontweight='bold', fontfamily='serif')
     ax3.text(0, -0.2, 'Southeast', fontsize=15, fontweight='bold', fontfamily='serif')
-    ax4.text(0, -0.2, 'Northeast', fontsize=15, fontweight='bold', fontfamily='serif')
-    ax5.text(0, -0.2, 'Midwest', fontsize=15, fontweight='bold', fontfamily='serif')
+    # ax4.text(0, -0.2, 'Northeast', fontsize=15, fontweight='bold', fontfamily='serif')
+    # ax5.text(0, -0.2, 'Midwest', fontsize=15, fontweight='bold', fontfamily='serif')
 
     ax0.set_xticklabels("")
     ax0.tick_params(bottom=False)
@@ -221,36 +221,33 @@ def creating_the_correlation_chart_for_each_region(final_table):
     #ax3.tick_params(left=True) # False
 
     # Customize x-axis and y-axis labels
-    x_labels =  ['Debt\nconsolidation', 'Credit-card', 'Home improvement','House', 'major purchase', 'small\nbusiness','Car','Wedding'] #'] # 'medical'
-    y_labels = ['0% - 4%', '4% - 8%', '8% - 12%', '12% - 16%', '16% - 20%']#, '20% - 24%']#, '24% - 28%']
+    x_labels =  ['Debt\nConsolidation', 'Credit-card', 'Home improvement','House', 'Major purchase', 'Small\nBusiness','Car','Wedding'] #'] # 'medical'
+    y_labels_ax3 = ['0% - 4%', '4% - 8%', '8% - 12%', '12% - 16%', '16% - 20%','20% - 24%']#, '20% - 24%']#, '24% - 28%']
 
     # loop iterates over the two subplots (ax1 and ax2)
-    for ax in [ax3, ax4 ,ax5]:
-        ax.set_xticklabels(x_labels, rotation=45, ha='right', weight='bold', color='black')
-        #ax.set_yticklabels(y_labels, rotation=0, weight='bold', color='black')
+    # for ax in [ax3, ax4 ,ax5]:
+    #     ax.set_xticklabels(x_labels, rotation=45, ha='right', weight='bold', color='black')
+    #     #ax.set_yticklabels(y_labels, rotation=0, weight='bold', color='black')
 
 
-    ax3.set_yticklabels(y_labels, rotation= 0, weight='bold', color='black')
+    ax3.set_yticklabels(y_labels_ax3, rotation= 0, weight='bold', color='black')
     #ax4.set_xticklabels("")
-    ax4.set_yticklabels("")
-    ax4.tick_params(left=False)
-    ax4.set_yticklabels("")
-    ax4.tick_params(left=False)
-    # ax4.set_xticklabels(
-    # ['Debt consolidation', 'redit card', 'home improvement', 'house', 'major purchase', 'small business', 'car','wedding', 'medical'])#,rotation=270)
-    ax5.set_yticklabels("")
-    ax5.tick_params(left=False)
-    # ax5.set_xticklabels(
-    # ['Debt consolidation', 'redit card', 'home improvement','house', 'major purchase', 'small business','car','wedding','medical'])#,rotation=270)
-
+    # ax4.set_yticklabels("")
+    # ax4.tick_params(left=False)
+    # ax4.set_yticklabels("")
+    # ax4.tick_params(left=False)
+    # # ax4.set_xticklabels(
+    # # ['Debt consolidation', 'redit card', 'home improvement', 'house', 'major purchase', 'small business', 'car','wedding', 'medical'])#,rotation=270)
+    # ax5.set_yticklabels("")
+    # ax5.tick_params(left=False)
 
     ax0.set_xlabel("")
     ax1.set_xlabel("")
     ax1.set_ylabel("")
     # ax2.set_xlabel("")
     # ax2.set_ylabel("")
-    ax4.set_ylabel("")
-    ax5.set_ylabel("")
+    # ax4.set_ylabel("")
+    # ax5.set_ylabel("")
     plt.savefig("my_corrrelation.jpg", dpi=250, bbox_inches='tight')
     plt.show()
 
