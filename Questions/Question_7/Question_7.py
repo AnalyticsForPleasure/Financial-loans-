@@ -11,7 +11,6 @@ import dataframe_image as dfi
 # return value:
 # ***************************************************************************************************************
 def creating_a_sub_grade_table(df):
-
     list_of_sub_grade_df = []
     list_of_number_of_loans_in_the_same_level = []
 
@@ -26,42 +25,31 @@ def creating_a_sub_grade_table(df):
     sub_grade = [sub_grade[1] for sub_grade in list_of_sub_grade_df]
 
     # Create the dataframe
-    df_starting = {
-        'grade': grade,
-        'Sub_grade': sub_grade,
-        'Counting_the_loans_within_a_Sub_grade': list_of_number_of_loans_in_the_same_level
-    }
+    df_starting = {'grade': grade,
+                   'Sub_grade': sub_grade,
+                   'Counting_the_loans_within_a_Sub_grade': list_of_number_of_loans_in_the_same_level}
 
-    final_table = pd.DataFrame(df_starting,
-                                columns=['grade', 'Sub_grade', 'Counting_the_loans_within_a_Sub_grade'])
+    final_table = pd.DataFrame(df_starting, columns=['grade', 'Sub_grade', 'Counting_the_loans_within_a_Sub_grade'])
 
     # Pivot the DataFrame
     pivot_df = final_table.pivot(index='Sub_grade', columns='grade', values='Counting_the_loans_within_a_Sub_grade')
-
     pivot_df= pivot_df.T
 
-    # Adding style:
-    pivot_df
-    #res_2 = list(pivot_df.columns.values)
+    ### Adding style:
     table_style = pivot_df
-
     # Changing the column rows name :
-    old_names = ['1', '2', '3', '4', '5']  ##list(table_style.columns.values)
+    old_names = ['1', '2', '3', '4', '5']
     new_names = ['Sub-grades 1', 'Sub-grades 2', 'Sub-grades 3', 'Sub-grades 4', 'Sub-grades 5']
     table_style = table_style.rename(columns=dict(zip(old_names, new_names)), inplace=False)
 
     # Changing the  rows index names :
     # Add "Grade " to each index row
     table_style.index = ['Grade ' + str(index) for index in table_style.index]
-
     # Adding style to the dataframe
     rows_to_mark = {0,1,2,3,4,5,6} # name of the index
-
     # Adding the style:
     highlighted_df = table_style.style.apply(lambda x: ['background: #ffe4b2' if x.name in rows_to_mark else '' for i in x],axis=1)
-    #highlighted_df.hide(axis='index')
     dfi.export(highlighted_df, filename='/home/shay_diy/PycharmProjects/Financial_loans/Questions/Question_7/grid_matrix_style.png') #/home/shay_diy/PycharmProjects/Financial_loans/Questions/Question_7
-    print('*')
 
     return pivot_df
 
