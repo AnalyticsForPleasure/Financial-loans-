@@ -22,11 +22,11 @@ def get_later_date(row):
 
 
 # **************************************************************************************************************
-# Function  name: When_the_laons_been_given__Before_after_issue_date_
+# Function  name: When_the_laons_been_given_Before_or_after_issue_date
 # input:
 # return value:
 # ***************************************************************************************************************
-def When_the_laons_been_given_Before_or_after_issue_date(df):
+def When_the_loans_been_given_Before_or_after_issue_date(df):
     # Convert dates to datetime objects
     df['issue_date'] = pd.to_datetime(df['issue_date'], format='%d-%m-%Y')
     df['last_credit_pull_date'] = pd.to_datetime(df['last_credit_pull_date'], format='%d-%m-%Y')
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     pd.set_option('display.max_rows', 5000)
     df = pd.read_csv('/home/shay_diy/PycharmProjects/Financial_loans/Data/financial_loan.csv')
 
-    When_the_laons_been_given_Before_or_after_issue_date(df)
+    When_the_loans_been_given_Before_or_after_issue_date(df)
     print('*')
 
 
